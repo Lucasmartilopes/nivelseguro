@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 860" width="1400" height="860" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="setaAzul" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0078D4"/>
+    </marker>
+  </defs>
+
+  <rect width="1400" height="860" fill="#FFFFFF"/>
+
+  <!-- Titulo -->
+  <text x="700" y="38" text-anchor="middle" font-size="24" font-weight="bold" fill="#1B1B1B">NivelSeguro · Arquitetura macro da solução (DevOps &amp; Cloud)</text>
+  <text x="700" y="62" text-anchor="middle" font-size="14" fill="#555">Monitoramento do nível de água e alertas de enchente por bairro · CitizenTech · ODS 11 e 13</text>
+
+  <!-- ============ Atores (esquerda) ============ -->
+  <g font-size="13" fill="#1B1B1B">
+    <rect x="30" y="130" width="250" height="92" rx="10" fill="#EAF7EE" stroke="#2E8B57" stroke-width="2"/>
+    <text x="155" y="158" text-anchor="middle" font-weight="bold" font-size="15">Cidadão</text>
+    <text x="155" y="180" text-anchor="middle">App Mobile (Flutter)</text>
+    <text x="155" y="200" text-anchor="middle">consulta alertas do bairro</text>
+
+    <rect x="30" y="250" width="250" height="92" rx="10" fill="#EAF7EE" stroke="#2E8B57" stroke-width="2"/>
+    <text x="155" y="278" text-anchor="middle" font-weight="bold" font-size="15">Sensor IoT</text>
+    <text x="155" y="300" text-anchor="middle">Arduino + sensor ultrassônico</text>
+    <text x="155" y="320" text-anchor="middle">POST /api/leituras (nível em cm)</text>
+
+    <rect x="30" y="370" width="250" height="92" rx="10" fill="#EAF7EE" stroke="#2E8B57" stroke-width="2"/>
+    <text x="155" y="398" text-anchor="middle" font-weight="bold" font-size="15">Defesa Civil / Gestor</text>
+    <text x="155" y="420" text-anchor="middle">Postman, navegador ou curl</text>
+    <text x="155" y="440" text-anchor="middle">CRUD de bairros e sensores</text>
+
+    <!-- Internet -->
+    <rect x="315" y="230" width="120" height="132" rx="60" fill="#F4F4F4" stroke="#777" stroke-width="2"/>
+    <text x="375" y="290" text-anchor="middle" font-weight="bold" font-size="15">Internet</text>
+    <text x="375" y="310" text-anchor="middle">HTTP :8080</text>
+  </g>
+
+  <!-- setas atores -> internet -->
+  <g stroke="#333" stroke-width="2" fill="none">
+    <line x1="280" y1="176" x2="330" y2="262" marker-end="url(#seta)"/>
+    <line x1="280" y1="296" x2="313" y2="296" marker-end="url(#seta)"/>
+    <line x1="280" y1="416" x2="330" y2="332" marker-end="url(#seta)"/>
+  </g>
+
+  <!-- ============ Provisionamento (esquerda, baixo) ============ -->
+  <g font-size="13" fill="#1B1B1B">
+    <rect x="30" y="560" width="250" height="110" rx="10" fill="#E6F2FB" stroke="#0078D4" stroke-width="2"/>
+    <text x="155" y="586" text-anchor="middle" font-weight="bold" font-size="15">Azure Cloud Shell</text>
+    <text x="155" y="608" text-anchor="middle">Azure CLI (az)</text>
+    <text x="155" y="630" text-anchor="middle" font-family="Consolas, monospace" font-size="12">01-criar-vm.sh</text>
+    <text x="155" y="650" text-anchor="middle" font-family="Consolas, monospace" font-size="12">02-configurar-vm.sh</text>
+
+    <rect x="30" y="700" width="250" height="110" rx="10" fill="#F3EEFB" stroke="#6A4BA8" stroke-width="2"/>
+    <text x="155" y="726" text-anchor="middle" font-weight="bold" font-size="15">GitHub (repositório)</text>
+    <text x="155" y="748" text-anchor="middle">código-fonte, Dockerfile,</text>
+    <text x="155" y="768" text-anchor="middle">docker-compose.yml, scripts</text>
+    <text x="155" y="790" text-anchor="middle">e README / How To</text>
+  </g>
+
+  <!-- ============ Azure ============ -->
+  <rect x="470" y="80" width="910" height="760" rx="14" fill="#F7FBFF" stroke="#0078D4" stroke-width="3"/>
+  <text x="490" y="106" font-size="16" font-weight="bold" fill="#0078D4">Microsoft Azure</text>
+
+  <rect x="488" y="120" width="874" height="704" rx="12" fill="none" stroke="#0078D4" stroke-width="2" stroke-dasharray="9 5"/>
+  <text x="506" y="144" font-size="14" font-weight="bold" fill="#0B4F8A">Resource Group: rg-nivelseguro · região brazilsouth</text>
+
+  <!-- IP publico e NSG -->
+  <g font-size="13" fill="#1B1B1B">
+    <rect x="506" y="190" width="190" height="70" rx="8" fill="#FFFFFF" stroke="#0078D4" stroke-width="2"/>
+    <text x="601" y="216" text-anchor="middle" font-weight="bold">IP público (Standard)</text>
+    <text x="601" y="238" text-anchor="middle" font-family="Consolas, monospace" font-size="12">pip-nivelseguro</text>
+
+    <rect x="506" y="290" width="190" height="130" rx="8" fill="#FFF7F7" stroke="#C0392B" stroke-width="2"/>
+    <text x="601" y="314" text-anchor="middle" font-weight="bold">NSG (firewall)</text>
+    <text x="601" y="334" text-anchor="middle" font-family="Consolas, monospace" font-size="12">nsg-nivelseguro</text>
+    <text x="601" y="358" text-anchor="middle">Libera 22/TCP · SSH</text>
+    <text x="601" y="378" text-anchor="middle">Libera 8080/TCP · API</text>
+    <text x="601" y="398" text-anchor="middle" fill="#C0392B">3306 NÃO exposta</text>
+  </g>
+  <g stroke="#333" stroke-width="2" fill="none">
+    <line x1="435" y1="270" x2="504" y2="232" marker-end="url(#seta)"/>
+    <line x1="601" y1="260" x2="601" y2="288" marker-end="url(#seta)"/>
+  </g>
+
+  <!-- VNet / Subnet -->
+  <rect x="720" y="160" width="626" height="650" rx="12" fill="#EEF6FD" stroke="#4A90D9" stroke-width="2"/>
+  <text x="738" y="184" font-size="13" font-weight="bold" fill="#0B4F8A">VNet vnet-nivelseguro · 10.0.0.0/16</text>
+  <rect x="736" y="196" width="594" height="600" rx="10" fill="#E3F0FC" stroke="#4A90D9" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="752" y="218" font-size="13" font-weight="bold" fill="#0B4F8A">Subnet snet-nivelseguro · 10.0.1.0/24</text>
+
+  <!-- VM -->
+  <rect x="752" y="230" width="562" height="550" rx="10" fill="#FFFFFF" stroke="#1B1B1B" stroke-width="2"/>
+  <text x="770" y="254" font-size="15" font-weight="bold" fill="#1B1B1B">VM vm-nivelseguro · AlmaLinux 9</text>
+  <text x="770" y="274" font-size="12" fill="#444">Standard_B2ats_v2 · 2 vCPU · 1 GB RAM + 2 GB swap · usuário admlnx</text>
+
+  <!-- Docker Engine -->
+  <rect x="768" y="288" width="530" height="476" rx="10" fill="#EAF4FB" stroke="#2496ED" stroke-width="2"/>
+  <text x="786" y="312" font-size="14" font-weight="bold" fill="#0F5E9C">Docker Engine + Docker Compose (docker-compose.yml)</text>
+
+  <!-- Rede -->
+  <rect x="784" y="326" width="498" height="296" rx="10" fill="#FFFFFF" stroke="#2496ED" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="800" y="348" font-size="13" font-weight="bold" fill="#0F5E9C">Rede bridge: nivelseguro-network</text>
+
+  <!-- Container API -->
+  <g font-size="12.5" fill="#1B1B1B">
+    <rect x="800" y="362" width="226" height="246" rx="10" fill="#FFF4E5" stroke="#E67E22" stroke-width="2"/>
+    <text x="913" y="388" text-anchor="middle" font-weight="bold" font-size="15">nivelseguro-api</text>
+    <text x="913" y="410" text-anchor="middle">Java 17 · Spring Boot 3</text>
+    <text x="913" y="430" text-anchor="middle">CRUD /api/bairros</text>
+    <text x="913" y="448" text-anchor="middle">/api/sensores · /api/leituras</text>
+    <text x="913" y="472" text-anchor="middle" font-weight="bold">porta 8080:8080</text>
+    <text x="913" y="494" text-anchor="middle">USER appuser (não-root)</text>
+    <text x="913" y="514" text-anchor="middle">WORKDIR /app</text>
+    <text x="913" y="534" text-anchor="middle">ENV SPRING_DATASOURCE_*</text>
+    <text x="913" y="554" text-anchor="middle">regra: cálculo do nível</text>
+    <text x="913" y="572" text-anchor="middle">de risco da leitura</text>
+    <text x="913" y="594" text-anchor="middle" font-size="11" fill="#7A4A12">build: Dockerfile (multi-stage)</text>
+  </g>
+
+  <!-- Container DB -->
+  <g font-size="12.5" fill="#1B1B1B">
+    <rect x="1056" y="362" width="210" height="246" rx="10" fill="#E8F1FB" stroke="#2E6DB4" stroke-width="2"/>
+    <text x="1161" y="388" text-anchor="middle" font-weight="bold" font-size="15">nivelseguro-db</text>
+    <text x="1161" y="410" text-anchor="middle">MySQL 8.0</text>
+    <text x="1161" y="434" text-anchor="middle" font-weight="bold">porta 3306</text>
+    <text x="1161" y="456" text-anchor="middle">ENV MYSQL_* (.env)</text>
+    <text x="1161" y="478" text-anchor="middle">healthcheck: mysqladmin</text>
+    <text x="1161" y="504" text-anchor="middle" font-weight="bold">Tabelas</text>
+    <text x="1161" y="524" text-anchor="middle">bairros</text>
+    <text x="1161" y="542" text-anchor="middle">└─&lt; sensores</text>
+    <text x="1161" y="560" text-anchor="middle">└─&lt; leituras</text>
+    <text x="1161" y="594" text-anchor="middle" font-size="11" fill="#1D4E89">build: database/Dockerfile</text>
+  </g>
+
+  <!-- API -> DB -->
+  <g stroke="#333" stroke-width="2" fill="none">
+    <line x1="1026" y1="470" x2="1054" y2="470" marker-end="url(#seta)"/>
+  </g>
+  <text x="1041" y="462" text-anchor="middle" font-size="10.5" font-weight="bold">JDBC</text>
+  <text x="1041" y="488" text-anchor="middle" font-size="9.5">depends_on</text>
+  <text x="1041" y="499" text-anchor="middle" font-size="9.5">healthy</text>
+
+  <!-- NSG -> API -->
+  <g stroke="#333" stroke-width="2.5" fill="none">
+    <polyline points="696,378 760,378 760,470 798,470" marker-end="url(#seta)"/>
+  </g>
+  <text x="728" y="370" text-anchor="middle" font-size="11" font-weight="bold">:8080</text>
+
+  <!-- Volume -->
+  <g font-size="12.5" fill="#1B1B1B">
+    <rect x="1056" y="646" width="210" height="100" rx="10" fill="#F3EEFB" stroke="#6A4BA8" stroke-width="2"/>
+    <text x="1161" y="672" text-anchor="middle" font-weight="bold">Volume nomeado</text>
+    <text x="1161" y="694" text-anchor="middle" font-family="Consolas, monospace" font-size="12">nivelseguro-mysql-data</text>
+    <text x="1161" y="716" text-anchor="middle">→ /var/lib/mysql</text>
+    <text x="1161" y="734" text-anchor="middle" font-size="11" fill="#555">dados persistem após down/up</text>
+  </g>
+  <g stroke="#6A4BA8" stroke-width="2" fill="none">
+    <line x1="1161" y1="608" x2="1161" y2="644" marker-end="url(#seta)"/>
+  </g>
+
+  <!-- .env -->
+  <g font-size="12.5" fill="#1B1B1B">
+    <rect x="800" y="646" width="226" height="100" rx="10" fill="#FFFDE7" stroke="#B59F00" stroke-width="2"/>
+    <text x="913" y="672" text-anchor="middle" font-weight="bold">Arquivo .env</text>
+    <text x="913" y="694" text-anchor="middle">senhas e nome do banco</text>
+    <text x="913" y="714" text-anchor="middle">lido pelo Compose</text>
+    <text x="913" y="734" text-anchor="middle" font-size="11" fill="#555">não versionado (.gitignore)</text>
+  </g>
+
+  <!-- Provisionamento e deploy (desenhados por cima das caixas) -->
+  <g stroke="#0078D4" stroke-width="2" fill="none" stroke-dasharray="7 5">
+    <line x1="280" y1="615" x2="486" y2="615" marker-end="url(#setaAzul)"/>
+  </g>
+  <text x="378" y="606" text-anchor="middle" font-size="12" fill="#0078D4" font-weight="bold">provisiona</text>
+  <g stroke="#6A4BA8" stroke-width="2" fill="none" stroke-dasharray="7 5">
+    <line x1="280" y1="755" x2="750" y2="755" marker-end="url(#seta)"/>
+  </g>
+  <rect x="300" y="733" width="150" height="16" fill="#FFFFFF"/>
+  <text x="375" y="746" text-anchor="middle" font-size="12" fill="#6A4BA8" font-weight="bold">git clone na VM</text>
+</svg>

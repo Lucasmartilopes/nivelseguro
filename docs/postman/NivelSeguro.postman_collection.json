@@ -1,0 +1,611 @@
+{
+  "info": {
+    "name": "NivelSeguro API",
+    "description": "CRUD da API NivelSeguro (Bairro 1:N Sensor 1:N Leitura). Troque a variavel baseUrl pelo IP publico da VM Azure: http://IP-DA-VM:8080. Execute as requisicoes na ordem.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://IP-DA-VM:8080"
+    },
+    {
+      "key": "bairroId",
+      "value": "1"
+    },
+    {
+      "key": "sensorId",
+      "value": "1"
+    },
+    {
+      "key": "leituraId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "0 - Status",
+      "item": [
+        {
+          "name": "GET pagina inicial",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": []
+            }
+          }
+        },
+        {
+          "name": "GET health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/actuator/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "actuator",
+                "health"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "1 - Bairros",
+      "item": [
+        {
+          "name": "GET listar bairros",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bairros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bairros"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST criar bairro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bairros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bairros"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Vila Teste FIAP\",\n  \"cidade\": \"São Paulo\",\n  \"uf\": \"SP\",\n  \"regiao\": \"Zona Sul\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set('bairroId', pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET bairro por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bairros/{{bairroId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bairros",
+                "{{bairroId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT atualizar bairro",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bairros/{{bairroId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bairros",
+                "{{bairroId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Vila Teste FIAP - ALTERADO\",\n  \"cidade\": \"São Paulo\",\n  \"uf\": \"SP\",\n  \"regiao\": \"Zona Sul\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET sensores do bairro (1:N)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bairros/{{bairroId}}/sensores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bairros",
+                "{{bairroId}}",
+                "sensores"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Sensores",
+      "item": [
+        {
+          "name": "GET listar sensores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sensores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sensores"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST criar sensor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/sensores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sensores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"NS-TESTE-01\",\n  \"localizacao\": \"Córrego de teste - ponto 1\",\n  \"cotaAlertaCm\": 200,\n  \"cotaEmergenciaCm\": 280,\n  \"bairroId\": {{bairroId}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set('sensorId', pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET sensor por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sensores/{{sensorId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sensores",
+                "{{sensorId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT atualizar sensor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/sensores/{{sensorId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sensores",
+                "{{sensorId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"NS-TESTE-01\",\n  \"localizacao\": \"Córrego de teste - ponto 1 (realocado)\",\n  \"cotaAlertaCm\": 210,\n  \"cotaEmergenciaCm\": 290,\n  \"ativo\": true,\n  \"bairroId\": {{bairroId}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET leituras do sensor (1:N)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sensores/{{sensorId}}/leituras",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sensores",
+                "{{sensorId}}",
+                "leituras"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - Leituras",
+      "item": [
+        {
+          "name": "GET listar leituras",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/leituras",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "leituras"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST criar leitura (Arduino envia 230 cm)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/leituras",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "leituras"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sensorId\": {{sensorId}},\n  \"nivelAguaCm\": 230.5,\n  \"chuvaMm\": 48.2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set('leituraId', pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET leitura por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/leituras/{{leituraId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "leituras",
+                "{{leituraId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT atualizar leitura (300 cm -> EMERGENCIA)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/leituras/{{leituraId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "leituras",
+                "{{leituraId}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sensorId\": {{sensorId}},\n  \"nivelAguaCm\": 300,\n  \"chuvaMm\": 61.0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET alertas ativos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/leituras/alertas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "leituras",
+                "alertas"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4 - Erros tratados",
+      "item": [
+        {
+          "name": "POST bairro invalido (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/bairros",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bairros"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"\",\n  \"cidade\": \"São Paulo\",\n  \"uf\": \"SAO\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET bairro inexistente (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bairros/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bairros",
+                "999999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST sensor com cotas invalidas (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/sensores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sensores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"NS-ERRO-01\",\n  \"localizacao\": \"Teste\",\n  \"cotaAlertaCm\": 300,\n  \"cotaEmergenciaCm\": 200,\n  \"bairroId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5 - Exclusao",
+      "item": [
+        {
+          "name": "DELETE leitura",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/leituras/{{leituraId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "leituras",
+                "{{leituraId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE sensor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sensores/{{sensorId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sensores",
+                "{{sensorId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "DELETE bairro",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bairros/{{bairroId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "bairros",
+                "{{bairroId}}"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
