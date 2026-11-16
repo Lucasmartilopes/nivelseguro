@@ -1,0 +1,77 @@
+# ============================================================
+# NivelSeguro - Docker Compose
+# Sobe 2 containers integrados na mesma rede:
+#   nivelseguro-db  -> MySQL 8.0 com volume nomeado (persistencia)
+#   nivelseguro-api -> API Java Spring Boot (CRUD)
+#
+# Os valores ${...} vem do arquivo .env (copie de .env.example).
+# Uso:  docker compose up -d --build
+# ============================================================
+name: nivelseguro
+
+services:
+
+  # ---------------- Banco de dados ----------------
+  nivelseguro-db:
+    container_name: nivelseguro-db
+    image: nivelseguro-db:1.0
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    # Desliga o performance_schema para economizar memoria na VM (1 GB de RAM)
+    command: ["--performance-schema=OFF"]
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?crie o arquivo .env - veja o README}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:?crie o arquivo .env - veja o README}
+      MYSQL_USER: ${MYSQL_USER:?crie o arquivo .env - veja o README}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?crie o arquivo .env - veja o README}
+      TZ: America/Sao_Paulo
+    ports:
+      # Porta publicada apenas na VM: o NSG do Azure NAO libera a 3306 para a internet
+      - "3306:3306"
+    volumes:
+      - nivelseguro-mysql-data:/var/lib/mysql
+    networks:
+      - nivelseguro-network
+    healthcheck:
+      # Usa TCP (127.0.0.1): so responde quando o MySQL terminou de inicializar
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+    restart: unless-stopped
+
+  # ---------------- API Java ----------------
+  nivelseguro-api:
+    container_name: nivelseguro-api
+    image: nivelseguro-api:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      # "nivelseguro-db" e resolvido pelo DNS interno da rede do Docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://nivelseguro-db:3306/${MYSQL_DATABASE:?crie o arquivo .env - veja o README}?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:?crie o arquivo .env - veja o README}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:?crie o arquivo .env - veja o README}
+      SERVER_PORT: 8080
+      JAVA_OPTS: "-Xms128m -Xmx256m"
+      TZ: America/Sao_Paulo
+    ports:
+      - "8080:8080"
+    networks:
+      - nivelseguro-network
+    depends_on:
+      # A API so inicia depois que o banco estiver saudavel (healthcheck)
+      nivelseguro-db:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  nivelseguro-network:
+    name: nivelseguro-network
+    driver: bridge
+
+volumes:
+  nivelseguro-mysql-data:
+    name: nivelseguro-mysql-data

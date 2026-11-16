@@ -1,0 +1,21 @@
+# Segredos (nunca versionar)
+.env
+
+# Build Maven
+target/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+*.class
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

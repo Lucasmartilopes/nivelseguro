@@ -1,0 +1,12 @@
+# Apenas pom.xml e src/ sao necessarios para construir a imagem da API
+.git
+.gitignore
+.env
+.env.example
+target/
+database/
+docs/
+scripts/
+*.md
+.idea/
+.vscode/
