@@ -62,7 +62,7 @@
 
 | Componente | Nome | Detalhe |
 |---|---|---|
-| Resource Group | `rg-nivelseguro` | região `brazilsouth` |
+| Resource Group | `rg-nivelseguro` | região `chilecentral` |
 | VNet / Subnet | `vnet-nivelseguro` / `snet-nivelseguro` | 10.0.0.0/16 / 10.0.1.0/24 |
 | NSG | `nsg-nivelseguro` | entrada: 22 (SSH) e 8080 (API). A 3306 **não** é exposta à internet |
 | IP público | `pip-nivelseguro` | SKU Standard |
@@ -190,7 +190,7 @@ O script pede a **senha do usuário `admlnx`** (mínimo de 12 caracteres, com ma
 
 | # | Comando Azure CLI | O que faz |
 |---|---|---|
-| 1 | `az group create` | cria o Resource Group `rg-nivelseguro` em `brazilsouth` |
+| 1 | `az group create` | cria o Resource Group `rg-nivelseguro` em `chilecentral` |
 | 2 | `az vm create` | cria a VM AlmaLinux 9 + VNet, Subnet, NSG (com regra SSH), IP público e disco |
 | 3 | `az network nsg rule create` | libera a porta **8080** (API) no NSG |
 | 4 | `az vm auto-shutdown` | desliga a VM automaticamente à 01:00 (economia de créditos) |
@@ -201,10 +201,10 @@ No final, o script mostra o **IP público** da VM. Anote-o.
 <summary>📄 Comandos Azure CLI utilizados (versão resumida)</summary>
 
 ```bash
-az group create --name rg-nivelseguro --location brazilsouth
+az group create --name rg-nivelseguro --location chilecentral
 
 az vm create \
-  --resource-group rg-nivelseguro --name vm-nivelseguro --location brazilsouth \
+  --resource-group rg-nivelseguro --name vm-nivelseguro --location chilecentral \
   --image almalinux:almalinux-x86_64:9-gen2:latest --size Standard_B2ats_v2 \
   --authentication-type password --admin-username admlnx --admin-password '<SENHA>' \
   --vnet-name vnet-nivelseguro --vnet-address-prefix 10.0.0.0/16 \
@@ -492,7 +492,7 @@ Execute dentro da VM para mostrar tudo de uma vez:
 | Problema | Solução |
 |---|---|
 | `az vm create` falha com `SkuNotAvailable` | Troque `SIZE` em `01-criar-vm.sh` por `Standard_B2s` ou `Standard_B1ms` |
-| Erro de política/região (`RequestDisallowedByAzure`) | Troque `LOCATION` para `eastus` ou `eastus2` nos scripts 01, 02 e 99 (mesmo nome de RG) |
+| Erro de política/região (`RequestDisallowedByAzure`) | A assinatura de estudante só libera algumas regiões. Liste as permitidas com `az policy assignment list --query "[].parameters.listOfAllowedLocations.value" -o tsv`, apague o RG (`az group delete -n rg-nivelseguro --yes`) e troque `LOCATION` em `01-criar-vm.sh` |
 | `permission denied ... docker.sock` | Execute `newgrp docker` ou saia e entre de novo no SSH |
 | `required variable MYSQL_PASSWORD is missing` | Faltou criar o `.env`: `cp .env.example .env` |
 | API reiniciando (`Restarting`) | Veja `docker compose logs nivelseguro-api`. Ela só conecta quando o banco está `healthy`. Aguarde e confira `docker compose ps` |

@@ -14,7 +14,7 @@ set -e
 
 # ---------------- Variaveis ----------------
 RESOURCE_GROUP="rg-nivelseguro"
-LOCATION="brazilsouth"
+LOCATION="chilecentral"
 VM_NAME="vm-nivelseguro"
 IMAGE="almalinux:almalinux-x86_64:9-gen2:latest"
 SIZE="Standard_B2ats_v2"          # 2 vCPU / 1 GB RAM (o script 02 cria 2 GB de swap)

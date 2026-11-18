@@ -64,7 +64,7 @@
   <text x="490" y="106" font-size="16" font-weight="bold" fill="#0078D4">Microsoft Azure</text>
 
   <rect x="488" y="120" width="874" height="704" rx="12" fill="none" stroke="#0078D4" stroke-width="2" stroke-dasharray="9 5"/>
-  <text x="506" y="144" font-size="14" font-weight="bold" fill="#0B4F8A">Resource Group: rg-nivelseguro · região brazilsouth</text>
+  <text x="506" y="144" font-size="14" font-weight="bold" fill="#0B4F8A">Resource Group: rg-nivelseguro · região chilecentral</text>
 
   <!-- IP publico e NSG -->
   <g font-size="13" fill="#1B1B1B">
