@@ -10,10 +10,9 @@
 
 | Nome completo | RM | Turma |
 |---|---|---|
-| _Lucas Martinez_ | _RM553816_ | _2TDS_ |
+| Lucas Martinez | RM553816 | 2TDSPA |
 
-
-**🎥 Vídeo de demonstração (YouTube, não listado):** _cole o link aqui_
+**🎥 Vídeo de demonstração (YouTube, não listado):** https://youtu.be/w9cT9uyalvY
 
 ---
 
