@@ -8,13 +8,9 @@ Monitoramento do nível de água de rios e córregos com sensores IoT e classifi
 
 | Nome completo | RM | Turma |
 |---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
+| Lucas Martinez | RM553816 | 2TDSPA |
 
 ## Links
 
-- **Repositório GitHub (público):** https://github.com/SEU-USUARIO/nivelseguro
-- **Vídeo no YouTube (não listado, 720p ou mais):** https://youtu.be/XXXXXXXX
+- **Repositório GitHub (público):** https://github.com/Lucasmartilopes/nivelseguro
+- **Vídeo no YouTube (não listado):** https://youtu.be/ME3FNUuN_rg

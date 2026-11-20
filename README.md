@@ -12,7 +12,7 @@
 |---|---|---|
 | Lucas Martinez | RM553816 | 2TDSPA |
 
-**🎥 Vídeo de demonstração (YouTube, não listado):** https://youtu.be/w9cT9uyalvY
+**🎥 Vídeo de demonstração (YouTube, não listado):** https://youtu.be/ME3FNUuN_rg
 
 ---
 
